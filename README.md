@@ -94,18 +94,6 @@ For each dataset the script saves `fused_gray`, `fused_color`, `alpha`, and
 ground truth. Images are paired by matching filename stem under
 `test/<dataset>/Inf` and `test/<dataset>/Vis`.
 
-| Local evaluation subset | Pairs |
-| --- | ---: |
-| LLVIP | 50 |
-| M3FD | 33 |
-| RoadScene | 42 |
-| TNO | 25 |
-
-These are the local research subsets, **not the complete official datasets or
-a claim of official train/test splits**. See [data notes](test/README.md).
-The local `RoadScene` folder contains `FLIR_` filenames; its official provenance
-has not been verified by this packaging task.
-
 ## Fusion Metrics
 
 ```bash
