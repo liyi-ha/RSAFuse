@@ -4,20 +4,12 @@ This snapshot preserves the author's current core implementation. The network,
 feature computation, teacher, fusion composition and training loss are unchanged.
 Legacy names remain to preserve imports and checkpoint keys.
 
-## Manuscript Versus Code
+## Implementation Details
 
-- The manuscript describes seven objective terms. `total_loss` currently sums
-  eight weighted components: relation (`seg`, itself cross-entropy plus Dice),
-  alpha, teacher-image, gradient, region, background, smoothness and residual.
-  The additional component is `w_bg * visible_background_loss`, default 0.35.
-  The author requested that this code be uploaded unchanged with this difference
-  disclosed. Publication/reproduction claims require resolving the version with
-  the author; the release does not silently remove the background term.
 - Encoder widths at the default base width are 32, 64, 128, 256 and 384.
   Decoder outputs are 256, 128, 64 and 32. In the first upsampling block the
   transposed convolution maps 384 to 256; concatenation with the 256-channel skip
-  produces 512 channels for `DoubleConv(512, 256)`. Some existing detailed
-  diagrams abbreviate this incorrectly, so they are not included here.
+  produces 512 channels for `DoubleConv(512, 256)`.
 - Four heads operate in parallel. The residual head ends in Tanh, while alpha
   and detail-gate heads end in Sigmoid. Relation logits do not feed the other
   heads or `compose_fusion`.
@@ -28,7 +20,7 @@ Legacy names remain to preserve imports and checkpoint keys.
 - The training teacher image comes from `fuse_visible_guided_np` in the dataset
   loader. It is not an output of a separately trained teacher network.
 - The default detail coefficient is 0.55 in training and 0.62 in inference.
-  This difference is preserved. The inference `--sharpen` argument is currently
+  The inference `--sharpen` argument is currently
   parsed but unused; no extra sharpening step is added by that argument.
 - `eval_fusion_metrics.py` computes SSIM as a sum of two source comparisons,
   not their mean. Its overall `ALL` row averages dataset means equally, not

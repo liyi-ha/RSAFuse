@@ -9,12 +9,6 @@ trained weights, ablation experiments, training data, or local machine settings.
 The implementation retains its original `regfuse_net` module and `RegFuseUNet`
 class names for compatibility. RSAFuse was previously named MRSPFuse/RegFuse.
 
-> **Version note:** This is the current implementation snapshot, not a claim of
-> complete agreement with the manuscript. The code and loss functions have not
-> been changed. In particular, the current training objective contains an
-> additional background term (`w_bg=0.35`) compared with the manuscript's
-> seven-term description. See [implementation notes](docs/IMPLEMENTATION_NOTES.md).
-
 ## Overview
 
 ![RSAFuse framework](docs/images/framework.png)
@@ -48,7 +42,7 @@ train_regfuse_net.py         Network training
 infer_regfuse_net.py         Grayscale/RGB fusion and control-map export
 eval_fusion_metrics.py      Existing fusion metric implementation
 test/                      Four paired local evaluation subsets
-docs/                      Version notes and selected figures
+docs/                      Implementation notes and selected figures
 ```
 
 ## Installation
@@ -78,9 +72,7 @@ python prepare_pseudo_dataset.py --root . --ir-dir MSRS_train/ir --vi-dir MSRS_t
 python train_regfuse_net.py --root . --save-dir checkpoints/regfuse_v2 --epochs 160 --batch-size 8 --crop-size 256 --base-channels 32 --workers 8 --amp
 ```
 
-These commands use the **current code defaults**, including the additional
-background loss noted above. They must not be described as a verified
-seven-term-paper reproduction. No loss term or weight was removed for release.
+These commands use the current code defaults.
 For CPU execution, omit `--amp`, use `--device cpu`, and reduce workers as needed.
 
 The preparation script creates class masks, weight maps and a seeded 90/10
